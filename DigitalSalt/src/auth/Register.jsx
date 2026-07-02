@@ -1,11 +1,121 @@
-import React from 'react'
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Register = () => {
-  return (
-    <div>
-      
-    </div>
-  )
-}
+  const [formData, setFormData] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
+    profilePicture: null,
+  });
 
-export default Register
+  const handleChange = (e) => {
+    const { name, value, files } = e.target;
+
+    setFormData({
+      ...formData,
+      [name]: files ? files[0] : value,
+    });
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(formData);
+
+    // Call Register API here
+  };
+
+  return (
+    <div className="min-h-screen bg-gray-100 flex items-center justify-center">
+      <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg">
+        <h2 className="text-3xl font-bold text-center mb-6">
+          Create Account
+        </h2>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+
+          <input
+            type="text"
+            name="firstName"
+            placeholder="First Name"
+            value={formData.firstName}
+            onChange={handleChange}
+            className="w-full border rounded-lg px-4 py-2"
+            required
+          />
+
+          <input
+            type="text"
+            name="lastName"
+            placeholder="Last Name"
+            value={formData.lastName}
+            onChange={handleChange}
+            className="w-full border rounded-lg px-4 py-2"
+            required
+          />
+
+          <input
+            type="email"
+            name="email"
+            placeholder="Email Address"
+            value={formData.email}
+            onChange={handleChange}
+            className="w-full border rounded-lg px-4 py-2"
+            required
+          />
+
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            value={formData.password}
+            onChange={handleChange}
+            className="w-full border rounded-lg px-4 py-2"
+            required
+          />
+
+          <input
+            type="password"
+            name="confirmPassword"
+            placeholder="Confirm Password"
+            value={formData.confirmPassword}
+            onChange={handleChange}
+            className="w-full border rounded-lg px-4 py-2"
+            required
+          />
+
+          <input
+            type="file"
+            name="profilePicture"
+            accept="image/*"
+            onChange={handleChange}
+            className="w-full border rounded-lg px-4 py-2"
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
+          >
+            Register
+          </button>
+
+          <p className="text-center">
+            Already have an account?{" "}
+            <Link
+              to="/"
+              className="text-blue-600 font-semibold hover:underline"
+            >
+              Login
+            </Link>
+          </p>
+
+        </form>
+      </div>
+    </div>
+  );
+};
+
+export default Register;
