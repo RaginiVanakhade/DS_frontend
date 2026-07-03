@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import CustomBtn from "../custom/CustomBtn";
+import {  useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
   });
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     setFormData({
@@ -37,6 +40,8 @@ const Login = () => {
         email: "",
         password: "",
       });
+
+      navigate("/dashboard");
 
     } catch (error) {
       console.log(error);

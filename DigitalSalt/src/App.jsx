@@ -5,6 +5,7 @@ import Login from "./auth/Login"
 import Register from "./auth/Register"
 import ForgotPass from "./auth/ForgotPass"
 import ResetPass from "./auth/ResetPass"
+import Dashboard from "./component/Dashboard"
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
         <Route path="/register" element={<Register />} />
         <Route path="/forgot-password" element={<ForgotPass />} />
         <Route path="/reset-password" element={<ResetPass />} />
+        <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/about" element={"about"} />
         <Route path="/contact" element={"contact"} />
       </Routes>
