@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import CustomBtn from "../custom/CustomBtn"
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -95,12 +96,11 @@ const Register = () => {
             className="w-full border rounded-lg px-4 py-2"
           />
 
-          <button
+          <CustomBtn
             type="submit"
             className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
-          >
-            Register
-          </button>
+            text="Register"
+          />
 
           <p className="text-center">
             Already have an account?{" "}

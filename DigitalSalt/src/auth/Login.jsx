@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import CustomBtn from "../custom/CustomBtn"
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -67,12 +68,12 @@ const Login = () => {
             </Link>
           </div>
 
-          <button
+          <CustomBtn
             type="submit"
             className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
-          >
-            Login
-          </button>
+            text="Login"
+            onClick={() => console.log("Login clicked!")}
+          />
 
           <p className="text-center mt-5">
             Don't have an account?{" "}

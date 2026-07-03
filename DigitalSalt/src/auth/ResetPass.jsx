@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CustomBtn from "../custom/CustomBtn"
 
 const ResetPass = () => {
 
@@ -39,11 +40,11 @@ const ResetPass = () => {
             onChange={(e) => setConfirmPassword(e.target.value)}
           />
 
-          <button
+          <CustomBtn
             className="w-full bg-violet-600 text-white rounded-lg py-3"
-          >
-            Reset Password
-          </button>
+            text="Reset Password"
+            onClick={() => console.log("Reset password clicked!")}
+          />
 
         </form>
 
