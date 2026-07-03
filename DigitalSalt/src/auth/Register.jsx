@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import CustomBtn from "../custom/CustomBtn"
+import axios from "axios";
+import CustomBtn from "../custom/CustomBtn";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -15,20 +16,67 @@ const Register = () => {
   const handleChange = (e) => {
     const { name, value, files } = e.target;
 
-    setFormData({
-      ...formData,
+    setFormData((prev) => ({
+      ...prev,
       [name]: files ? files[0] : value,
-    });
+    }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    if (formData.password !== formData.confirmPassword) {
+      alert("Passwords do not match");
+      return;
+    }
 
-    // Call Register API here
+    const data = new FormData();
+
+    data.append("firstName", formData.firstName);
+    data.append("lastName", formData.lastName);
+    data.append("email", formData.email);
+    data.append("password", formData.password);
+    data.append("confirmPassword", formData.confirmPassword);
+
+    if (formData.profilePicture) {
+      data.append("profilePicture", formData.profilePicture);
+    }
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/register",
+        data,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
+      console.log(response.data);
+
+      alert(response.data.message);
+
+      setFormData({
+        firstName: "",
+        lastName: "",
+        email: "",
+        password: "",
+        confirmPassword: "",
+        profilePicture: null,
+      });
+    } catch (error) {
+      console.error(error);
+
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Something went wrong");
+      }
+    }
   };
 
+  const fileInputRef = useRef(null);
   return (
     <div className="min-h-screen bg-gray-100 flex items-center justify-center">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-lg">
@@ -37,7 +85,6 @@ const Register = () => {
         </h2>
 
         <form onSubmit={handleSubmit} className="space-y-4">
-
           <input
             type="text"
             name="firstName"
@@ -94,12 +141,13 @@ const Register = () => {
             accept="image/*"
             onChange={handleChange}
             className="w-full border rounded-lg px-4 py-2"
+            ref={fileInputRef}
           />
 
           <CustomBtn
             type="submit"
-            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
             text="Register"
+            className="w-full bg-green-600 text-white py-3 rounded-lg hover:bg-green-700"
           />
 
           <p className="text-center">
@@ -111,7 +159,6 @@ const Register = () => {
               Login
             </Link>
           </p>
-
         </form>
       </div>
     </div>
