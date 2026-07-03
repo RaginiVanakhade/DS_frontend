@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import CustomBtn from "../custom/CustomBtn"
+import axios from "axios";
+import CustomBtn from "../custom/CustomBtn";
 
 const Login = () => {
   const [formData, setFormData] = useState({
@@ -15,22 +16,49 @@ const Login = () => {
     });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(formData);
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/auth/login",
+        {
+          email: formData.email,
+          password: formData.password,
+        }
+      );
 
-    // Call your login API here
+      console.log(response.data);
+
+      alert(response.data.message);
+
+      // Clear form
+      setFormData({
+        email: "",
+        password: "",
+      });
+
+    } catch (error) {
+      console.log(error);
+
+      if (error.response) {
+        alert(error.response.data.message);
+      } else {
+        alert("Something went wrong");
+      }
+    }
   };
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md">
+
         <h2 className="text-3xl font-bold text-center mb-6">
           Login
         </h2>
 
         <form onSubmit={handleSubmit}>
+
           <div className="mb-4">
             <label className="block mb-2">Email</label>
 
@@ -72,7 +100,6 @@ const Login = () => {
             type="submit"
             className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
             text="Login"
-            onClick={() => console.log("Login clicked!")}
           />
 
           <p className="text-center mt-5">
@@ -84,6 +111,7 @@ const Login = () => {
               Register here
             </Link>
           </p>
+
         </form>
       </div>
     </div>
