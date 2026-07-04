@@ -18,6 +18,7 @@ import {
   Toolbar,
   Typography,
 } from "@mui/material";
+import { useProfile } from "../context/ProfileContext";
 
 import {
   Menu as MenuIcon,
@@ -87,7 +88,7 @@ const menuItems = [
 
 export default function DashboardLayout() {
   const [mobileOpen, setMobileOpen] = useState(false);
-
+const { profile } = useProfile();
   const handleDrawerToggle = () => {
     setMobileOpen(!mobileOpen);
   };
@@ -172,7 +173,17 @@ export default function DashboardLayout() {
             </Badge>
           </IconButton>
 
-          <Avatar sx={{ ml: 2 }}>R</Avatar>
+          <Avatar
+  src={profile.profilePicture}
+  sx={{
+    ml: 2,
+    width: 40,
+    height: 40,
+  }}
+>
+  {!profile.profilePicture &&
+    `${profile.firstName[0]}${profile.lastName[0]}`}
+</Avatar>
         </Toolbar>
       </AppBar>
 

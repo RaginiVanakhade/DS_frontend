@@ -11,15 +11,11 @@ import {
   Typography,
 } from "@mui/material";
 import { PhotoCamera } from "@mui/icons-material";
+import { useProfile } from "../context/ProfileContext";
+
 
 const Profile = () => {
-  const [profile, setProfile] = useState({
-    firstName: "John",
-    lastName: "Doe",
-    email: "john.doe@example.com",
-    profilePicture: "",
-  });
-
+  const { profile, setProfile } = useProfile();
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
     newPassword: "",
